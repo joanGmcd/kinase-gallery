@@ -33,7 +33,7 @@ import {
 	Vector2,
 	Vector3
 } from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
-import chevrotain from 'https://unpkg.com/chevrotain/lib/chevrotain.min.mjs';
+import chevrotain from './chevrotain.min.mjs';
 
 
 class VRMLLoader extends Loader {
