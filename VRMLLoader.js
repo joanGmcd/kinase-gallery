@@ -32,7 +32,7 @@ import {
 	TextureLoader,
 	Vector2,
 	Vector3
-} from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/three.module.js';
+} from 'three';
 import chevrotain from './chevrotain.module.min.js';
 
 
