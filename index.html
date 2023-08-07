@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>3D Protein Structure</title>
-    <script src="https://threejs.org/build/three.module.js"></script>
-    <script src="https://threejs.org/examples/jsm/controls/OrbitControls.js"></script>
-    <script src="https://threejs.org/examples/jsm/loaders/VRMLLoader.js"></script>
 </head>
 <body>
-<script>
+<script type="module">
+  import * as THREE from 'https://threejs.org/build/three.module.js';
+  import { VRMLLoader } from 'https://threejs.org/examples/jsm/loaders/VRMLLoader.js';
+  import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
 
   // Create a scene, camera, and renderer
   var scene = new THREE.Scene();
