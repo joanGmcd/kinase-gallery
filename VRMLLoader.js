@@ -32,8 +32,8 @@ import {
 	TextureLoader,
 	Vector2,
 	Vector3
-} from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
-import chevrotain from './chevrotain.min.mjs';
+} from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/three.module.js';
+import chevrotain from './chevrotain.module.min.js';
 
 
 class VRMLLoader extends Loader {
