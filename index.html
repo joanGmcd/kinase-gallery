@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3D Protein Structure</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r110/three.min.js"></script>
+    <script src="OBJLoader.js"></script>
+</head>
+<body>
+    <script>
+        // Create a scene, camera, and renderer
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Create a directional light
+        var light = new THREE.DirectionalLight(0xffffff, 0.5);
+        light.position.set(1, 1, 1);
+        scene.add(light);
+
+        // Create a loader
+        var loader = new THREE.OBJLoader();
+
+        // Load the protein structure
+        loader.load('protein.obj', function (object) {
+          // Add the loaded object to the scene
+          scene.add(object);
+        });
+
+        // Position the camera
+        camera.position.z = 5;
+
+        // Define an animation loop
+        var animate = function () {
+          requestAnimationFrame(animate);
+
+          // Render the scene
+          renderer.render(scene, camera);
+        };
+
+        // Start the animation loop
+        animate();
+    </script>
+</body>
+</html>
