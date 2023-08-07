@@ -1,46 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>3D Protein Structure</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r110/three.min.js"></script>
-    <script src="OBJLoader.js"></script>
-</head>
-<body>
-    <script>
-        // Create a scene, camera, and renderer
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+<script type="module">
+  import * as THREE from 'https://threejs.org/build/three.module.js';
+  import { VRMLLoader } from 'https://threejs.org/examples/jsm/loaders/VRMLLoader.js';
+  import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
 
-        // Create a directional light
-        var light = new THREE.DirectionalLight(0xffffff, 0.5);
-        light.position.set(1, 1, 1);
-        scene.add(light);
+  // Create a scene, camera, and renderer
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
 
-        // Create a loader
-        var loader = new THREE.OBJLoader();
+  // Create a directional light
+  var light = new THREE.DirectionalLight(0xffffff, 0.5);
+  light.position.set(1, 1, 1);
+  scene.add(light);
 
-        // Load the protein structure
-        loader.load('protein.obj', function (object) {
-          // Add the loaded object to the scene
-          scene.add(object);
-        });
+  // Create a loader
+  var loader = new VRMLLoader();
 
-        // Position the camera
-        camera.position.z = 5;
+  // Load the protein structure
+  loader.load('protein.wrl', function (object) {
+    // Add the loaded object to the scene
+    scene.add(object);
+  });
 
-        // Define an animation loop
-        var animate = function () {
-          requestAnimationFrame(animate);
+  // Position the camera
+  camera.position.z = 5;
 
-          // Render the scene
-          renderer.render(scene, camera);
-        };
+  // Create OrbitControls
+  var controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; // Enable smooth damping
+  controls.dampingFactor = 0.05;
 
-        // Start the animation loop
-        animate();
-    </script>
-</body>
-</html>
+  // Define an animation loop
+  var animate = function () {
+    requestAnimationFrame(animate);
+    controls.update(); // Update the controls
+    renderer.render(scene, camera);
+  };
+
+  // Start the animation loop
+  animate();
+</script>
