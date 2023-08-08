@@ -8,7 +8,34 @@
   import * as THREE from '../three.module.js';
   import { VRMLLoader } from '../VRMLLoader.js';
   import { OrbitControls } from '../OrbitControls.js';
+// Create a raycaster
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
 
+// Add a mouse move event listener
+window.addEventListener('mousemove', onMouseMove, false);
+
+// Define a plane or object to intersect with (e.g., the ground plane)
+var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+
+// Function to handle mouse move event
+function onMouseMove(event) {
+    // Normalize mouse position to (-1, 1) range
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    // Update the raycaster with the camera and mouse position
+    raycaster.setFromCamera(mouse, camera);
+
+    // Calculate the intersection of the ray with the plane
+    var intersects = raycaster.ray.intersectPlane(plane);
+
+    if (intersects) {
+        // Display the coordinates
+        var coords = `X: ${intersects.x.toFixed(2)}, Y: ${intersects.y.toFixed(2)}, Z: ${intersects.z.toFixed(2)}`;
+        console.log(coords); // Or display in an HTML element
+    }
+}
   // Create a scene, camera, and renderer
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
