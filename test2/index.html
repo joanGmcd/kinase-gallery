@@ -37,7 +37,39 @@
     // Add the loaded object to the scene
     scene.add(object);
   });
+  // Create a canvas and draw text onto it
+  var canvas = document.createElement('canvas');
+  var context = canvas.getContext('2d');
+  context.font = '24px Arial';
+  context.fillStyle = 'white';
+  context.textAlign = 'center';
+  context.fillText('Your Text Here', canvas.width / 2, canvas.height / 2);
 
+// Create a texture from the canvas
+  var texture = new THREE.Texture(canvas); 
+  texture.needsUpdate = true;
+
+// Create a material using the texture
+  var material = new THREE.SpriteMaterial({ map: texture });
+
+// Create a sprite using the material
+  var sprite = new THREE.Sprite(material);
+
+// Set the position of the sprite
+  sprite.position.set(0, 0, 0); // Adjust as needed
+
+// Add the sprite to the scene
+  scene.add(sprite);
+
+// In your animation loop, update the sprite's rotation to match the camera's rotation
+  var animate = function () {
+  requestAnimationFrame(animate);
+
+  // Make the sprite face the camera
+  sprite.quaternion.copy(camera.quaternion);
+
+  renderer.render(scene, camera);
+  };
   // Position the camera
   camera.position.z = 5;
 
