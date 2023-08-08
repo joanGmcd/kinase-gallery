@@ -108,16 +108,18 @@ for (var type in geometriesByType) {
     }
   }
 }); // <-- This closing brace was missing
-  // Create a canvas and draw text onto it
-  var canvas = document.createElement('canvas');
-  var context = canvas.getContext('2d');
-  context.font = '50px Arial';
-  var text = 'DFG';
-  var textWidth = context.measureText(text).width;
-  canvas.width = textWidth;
-  context.textAlign = 'center'
-  context.fillText('DFG', canvas.width/2, canvas.height/2);
-  context.fillStyle = 'red';
+// Create a canvas and draw text onto it
+var canvas = document.createElement('canvas');
+var context = canvas.getContext('2d');
+context.font = '50px Arial';
+var text = 'DFG';
+var textWidth = context.measureText(text).width;
+var textHeight = 50; // Set the height based on the font size
+canvas.width = textWidth;
+canvas.height = textHeight; // Set the canvas height
+context.fillStyle = 'red'; // Set the fill color before drawing the text
+context.textAlign = 'center';
+context.fillText('DFG', canvas.width / 2, canvas.height / 2 + textHeight / 4); // Adjust the vertical position
 // Create a texture from the canvas
   var texture = new THREE.Texture(canvas); 
   texture.needsUpdate = true;
