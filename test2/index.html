@@ -69,24 +69,49 @@ function onMouseMove(event) {
 loader.load('overview.wrl', function (object) {
   // Add the loaded object to the scene
   scene.add(object);
+var geometriesByType = {
+  Cylinder: [],
+  IndexedFaceSet: [],
+  // Add other types as needed
+};
 
-  // Traverse the object to identify geometry blocks
-  object.traverse(function (child) {
-    if (child instanceof THREE.Mesh) { // Check if the child is a Mesh (geometry)
-      // Create a button for this geometry
-      var button = document.createElement('button');
-      button.textContent = 'Toggle ' + child.name; // You can name the geometries for better identification
-      button.onclick = function () {
-        child.visible = !child.visible; // Toggle visibility
-      };
-      document.body.appendChild(button); // Add the button to the HTML body
-    }
-  });
+scene.traverse(function (object) {
+  if (object.geometry instanceof THREE.CylinderGeometry) {
+    geometriesByType.Cylinder.push(object);
+  } else if (object.geometry instanceof THREE.IndexedFaceSet) {
+    geometriesByType.IndexedFaceSet.push(object);
+  }
+  // Add other conditions for other geometry types
 });
+for (var type in geometriesByType) {
+  var button = document.createElement('button');
+  button.innerHTML = 'Toggle ' + type;
+  button.onclick = (function (type) {
+    return function () {
+      toggleGeometries(type);
+    };
+  })(type);
+  document.body.appendChild(button);
+}
+function toggleGeometries(type) {
+  var geometries = geometriesByType[type];
+  for (var i = 0; i < geometries.length; i++) {
+    geometries[i].visible = !geometries[i].visible;
+  }
+  renderer.render(scene, camera);
+}
+button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 5px;
+  z-index: 100; /* Ensure buttons are above the canvas */
+}
+
   // Create a canvas and draw text onto it
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
-  context.font = '100px Arial';
+  context.font = '300px Arial';
   context.fillStyle = 'red';
   context.textAlign = 'center';
   context.fillText('DFG', canvas.width / 2, canvas.height / 2);
@@ -102,7 +127,7 @@ loader.load('overview.wrl', function (object) {
   var sprite = new THREE.Sprite(material);
 
 // Set the position of the sprite
-  sprite.position.set(2.54,0.63,7.22); // Adjust as needed
+  sprite.position.set(2.54,0.0,7.22); // Adjust as needed
 
 // Add the sprite to the scene
   scene.add(sprite);
