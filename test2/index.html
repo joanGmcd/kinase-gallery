@@ -92,7 +92,7 @@ for (var type in geometriesByType) {
   var button = document.createElement('button');
   button.innerHTML = type;
   button.style.padding = '10px 20px';
-  button.style.fontSize = '50px';
+  button.style.fontSize = '25px';
   button.onclick = (function (type) {
     return function () {
       toggleGeometries(type);
@@ -111,10 +111,10 @@ for (var type in geometriesByType) {
 // Create a canvas and draw text onto it
 var canvas = document.createElement('canvas');
 var context = canvas.getContext('2d');
-context.font = '50px Arial';
+context.font = '200px Arial';
 var text = 'DFG';
 var textWidth = context.measureText(text).width;
-var textHeight = 50; // Set the height based on the font size
+var textHeight = 200; // Set the height based on the font size
 canvas.width = textWidth;
 canvas.height = textHeight; // Set the canvas height
 context.fillStyle = 'red'; // Set the fill color before drawing the text
