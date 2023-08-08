@@ -33,7 +33,7 @@ import {
 	Vector2,
 	Vector3
 } from './three.module.js';
-import * as chevrotain from './chevrotain.min.js';
+import chevrotain from './chevrotain.min.js';
 
 
 class VRMLLoader extends Loader {
