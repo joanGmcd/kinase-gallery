@@ -66,14 +66,27 @@ function onMouseMove(event) {
   var loader = new VRMLLoader();
 
   // Load the protein structure
-  loader.load('overview.wrl', function (object) {
-    // Add the loaded object to the scene
-    scene.add(object);
+loader.load('overview.wrl', function (object) {
+  // Add the loaded object to the scene
+  scene.add(object);
+
+  // Traverse the object to identify geometry blocks
+  object.traverse(function (child) {
+    if (child instanceof THREE.Mesh) { // Check if the child is a Mesh (geometry)
+      // Create a button for this geometry
+      var button = document.createElement('button');
+      button.textContent = 'Toggle ' + child.name; // You can name the geometries for better identification
+      button.onclick = function () {
+        child.visible = !child.visible; // Toggle visibility
+      };
+      document.body.appendChild(button); // Add the button to the HTML body
+    }
   });
+});
   // Create a canvas and draw text onto it
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
-  context.font = '24px Arial';
+  context.font = '100px Arial';
   context.fillStyle = 'red';
   context.textAlign = 'center';
   context.fillText('DFG', canvas.width / 2, canvas.height / 2);
