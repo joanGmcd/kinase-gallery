@@ -33,7 +33,7 @@ function onMouseMove(event) {
         var intersection = intersects[0].point;
 
         // Display the coordinates
-        var coords = `X: ${intersection.x.toFixed(2)}, Y: ${intersection.y.toFixed(2)}, Z: ${intersection.z.toFixed(2)}`;
+        var coords = `${intersection.x.toFixed(2)}, ${intersection.y.toFixed(2)}, ${intersection.z.toFixed(2)}`;
         //console.log(coords); // Or display in an HTML element
         document.getElementById('coordinates').textContent = coords;
 
@@ -89,7 +89,7 @@ function onMouseMove(event) {
   var sprite = new THREE.Sprite(material);
 
 // Set the position of the sprite
-  sprite.position.set(17.664833,13.5631695,7.0937195); // Adjust as needed
+  sprite.position.set(2.54,0.63,7.22); // Adjust as needed
 
 // Add the sprite to the scene
   scene.add(sprite);
