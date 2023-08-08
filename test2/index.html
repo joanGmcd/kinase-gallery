@@ -69,31 +69,33 @@ function onMouseMove(event) {
 loader.load('overview.wrl', function (object) {
   // Add the loaded object to the scene
   scene.add(object);
-// Grouping geometries by type (adjust this part based on your actual geometries)
-var geometriesByType = {
-  Cylinder: [],
-  IndexedFaceSet: [],
-};
 
-// Creating buttons
-for (var type in geometriesByType) {
-  var button = document.createElement('button');
-  button.innerHTML = 'Toggle ' + type;
-  button.onclick = (function (type) {
-    return function () {
-      toggleGeometries(type);
-    };
-  })(type);
-  document.body.appendChild(button);
-}
+  // Grouping geometries by type (adjust this part based on your actual geometries)
+  var geometriesByType = {
+    Cylinder: [],
+    IndexedFaceSet: [],
+  };
 
-// Toggle function
-function toggleGeometries(type) {
-  var geometries = geometriesByType[type];
-  for (var i = 0; i < geometries.length; i++) {
-    geometries[i].visible = !geometries[i].visible;
+  // Creating buttons
+  for (var type in geometriesByType) {
+    var button = document.createElement('button');
+    button.innerHTML = 'Toggle ' + type;
+    button.onclick = (function (type) {
+      return function () {
+        toggleGeometries(type);
+      };
+    })(type);
+    document.body.appendChild(button);
   }
-}
+
+  // Toggle function
+  function toggleGeometries(type) {
+    var geometries = geometriesByType[type];
+    for (var i = 0; i < geometries.length; i++) {
+      geometries[i].visible = !geometries[i].visible;
+    }
+  }
+}); // <-- This closing brace was missing
   // Create a canvas and draw text onto it
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
