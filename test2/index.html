@@ -78,27 +78,28 @@ loader.load('overview.wrl', function (object) {
     
   };
 object.traverse(function (child) {
-    if (child.geometry && child.geometry.type === 'CylinderGeometry') {
-      geometriesByType.Cylinder.push(child);
-    } else if (child.geometry && child.geometry.type === 'Mesh') {
-      geometriesByType.Mesh.push(child);
-    } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
-      geometriesByType.Sphere.push(child);
-  });
-  // Creating buttons
-  for (var type in geometriesByType) {
-    var button = document.createElement('button');
-    button.innerHTML = type;
-    button.style.padding = '10px 20px';
-    button.style.fontSize = '200px';
-    button.onclick = (function (type) {
-      return function () {
-        toggleGeometries(type);
-      };
-    })(type);
-    document.body.appendChild(button);
+  if (child.geometry && child.geometry.type === 'CylinderGeometry') {
+    geometriesByType.Cylinder.push(child);
+  } else if (child.geometry && child.geometry.type === 'Mesh') {
+    geometriesByType.Mesh.push(child);
+  } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
+    geometriesByType.Sphere.push(child);
   }
+}); // <-- This closing parenthesis was missing
 
+// Creating buttons
+for (var type in geometriesByType) {
+  var button = document.createElement('button');
+  button.innerHTML = type;
+  button.style.padding = '10px 20px';
+  button.style.fontSize = '200px';
+  button.onclick = (function (type) {
+    return function () {
+      toggleGeometries(type);
+    };
+  })(type);
+  document.body.appendChild(button);
+}
   // Toggle function
   function toggleGeometries(type) {
     var geometries = geometriesByType[type];
