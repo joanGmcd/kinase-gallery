@@ -69,20 +69,13 @@ function onMouseMove(event) {
 loader.load('overview.wrl', function (object) {
   // Add the loaded object to the scene
   scene.add(object);
+// Grouping geometries by type (adjust this part based on your actual geometries)
 var geometriesByType = {
   Cylinder: [],
   IndexedFaceSet: [],
-  // Add other types as needed
 };
 
-scene.traverse(function (object) {
-  if (object.geometry instanceof THREE.CylinderGeometry) {
-    geometriesByType.Cylinder.push(object);
-  } else if (object.geometry instanceof THREE.IndexedFaceSet) {
-    geometriesByType.IndexedFaceSet.push(object);
-  }
-  // Add other conditions for other geometry types
-});
+// Creating buttons
 for (var type in geometriesByType) {
   var button = document.createElement('button');
   button.innerHTML = 'Toggle ' + type;
@@ -93,21 +86,14 @@ for (var type in geometriesByType) {
   })(type);
   document.body.appendChild(button);
 }
+
+// Toggle function
 function toggleGeometries(type) {
   var geometries = geometriesByType[type];
   for (var i = 0; i < geometries.length; i++) {
     geometries[i].visible = !geometries[i].visible;
   }
-  renderer.render(scene, camera);
 }
-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  margin: 5px;
-  z-index: 100; /* Ensure buttons are above the canvas */
-}
-
   // Create a canvas and draw text onto it
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
