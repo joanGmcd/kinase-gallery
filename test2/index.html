@@ -75,7 +75,13 @@ loader.load('overview.wrl', function (object) {
     Cylinder: [],
     IndexedFaceSet: [],
   };
-
+object.traverse(function (child) {
+    if (child.geometry && child.geometry.type === 'CylinderGeometry') {
+      geometriesByType.Cylinder.push(child);
+    } else if (child.geometry && child.geometry.type === 'IndexedFaceSetGeometry') {
+      geometriesByType.IndexedFaceSet.push(child);
+    }
+  });
   // Creating buttons
   for (var type in geometriesByType) {
     var button = document.createElement('button');
