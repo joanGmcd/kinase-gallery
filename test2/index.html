@@ -8,15 +8,12 @@
   import * as THREE from '../three.module.js';
   import { VRMLLoader } from '../VRMLLoader.js';
   import { OrbitControls } from '../OrbitControls.js';
-// Create a raycaster
+  // Create a raycaster
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
 // Add a mouse move event listener
 window.addEventListener('mousemove', onMouseMove, false);
-
-// Define a plane or object to intersect with (e.g., the ground plane)
-var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
 // Function to handle mouse move event
 function onMouseMove(event) {
@@ -27,15 +24,21 @@ function onMouseMove(event) {
     // Update the raycaster with the camera and mouse position
     raycaster.setFromCamera(mouse, camera);
 
-    // Calculate the intersection of the ray with the plane
-    var intersects = raycaster.ray.intersectPlane(plane);
+    // Calculate the intersections of the ray with all objects in the scene
+    var intersects = raycaster.intersectObjects(scene.children);
 
-    if (intersects) {
+    if (intersects.length > 0) {
+        // Get the first intersection
+        var intersection = intersects[0].point;
+
         // Display the coordinates
-        var coords = `X: ${intersects.x.toFixed(2)}, Y: ${intersects.y.toFixed(2)}, Z: ${intersects.z.toFixed(2)}`;
+        var coords = `X: ${intersection.x.toFixed(2)}, Y: ${intersection.y.toFixed(2)}, Z: ${intersection.z.toFixed(2)}`;
         console.log(coords); // Or display in an HTML element
     }
 }
+
+// Rest of your code (scene, camera, renderer, animation loop, etc.)
+
   // Create a scene, camera, and renderer
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
