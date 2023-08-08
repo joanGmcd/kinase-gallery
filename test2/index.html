@@ -92,7 +92,7 @@ for (var type in geometriesByType) {
   var button = document.createElement('button');
   button.innerHTML = type;
   button.style.padding = '10px 20px';
-  button.style.fontSize = '200px';
+  button.style.fontSize = '50px';
   button.onclick = (function (type) {
     return function () {
       toggleGeometries(type);
@@ -111,14 +111,13 @@ for (var type in geometriesByType) {
   // Create a canvas and draw text onto it
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
-  context.font = '200px Arial';
+  context.font = '50px Arial';
   var text = 'DFG';
   var textWidth = context.measureText(text).width;
   canvas.width = textWidth;
   context.textAlign = 'center'
-  context.fillStyle = 'red';
   context.fillText('DFG', canvas.width/2, canvas.height/2);
-
+  context.fillStyle = 'red';
 // Create a texture from the canvas
   var texture = new THREE.Texture(canvas); 
   texture.needsUpdate = true;
@@ -130,7 +129,7 @@ for (var type in geometriesByType) {
   var sprite = new THREE.Sprite(material);
 
 // Set the position of the sprite
-  sprite.position.set(2.54,-0.5,7.22); // Adjust as needed
+  sprite.position.set(2.54,0.0,7.22); // Adjust as needed
 
 // Add the sprite to the scene
   scene.add(sprite);
