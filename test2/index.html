@@ -73,13 +73,13 @@ loader.load('overview.wrl', function (object) {
   // Grouping geometries by type (adjust this part based on your actual geometries)
   var geometriesByType = {
     Cylinder: [],
-    IndexedFaceSet: [],
+    Mesh: [],
   };
 object.traverse(function (child) {
     if (child.geometry && child.geometry.type === 'CylinderGeometry') {
       geometriesByType.Cylinder.push(child);
-    } else if (child.geometry && child.geometry.type === 'IndexedFaceSetGeometry') {
-      geometriesByType.IndexedFaceSet.push(child);
+    } else if (child.geometry && child.geometry.type === 'Mesh') {
+      geometriesByType.Mesh.push(child);
     }
   });
   // Creating buttons
@@ -105,10 +105,10 @@ object.traverse(function (child) {
   // Create a canvas and draw text onto it
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
-  context.font = '300px Arial';
+  context.font = '200px Arial';
   context.fillStyle = 'red';
   context.textAlign = 'center';
-  context.fillText('DFG', canvas.width / 2, canvas.height / 2);
+  context.fillText('DFG', canvas.width, canvas.height);
 
 // Create a texture from the canvas
   var texture = new THREE.Texture(canvas); 
@@ -121,7 +121,7 @@ object.traverse(function (child) {
   var sprite = new THREE.Sprite(material);
 
 // Set the position of the sprite
-  sprite.position.set(2.54,0.0,7.22); // Adjust as needed
+  sprite.position.set(2.54,-0.5,7.22); // Adjust as needed
 
 // Add the sprite to the scene
   scene.add(sprite);
