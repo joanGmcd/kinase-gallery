@@ -111,10 +111,10 @@ for (var type in geometriesByType) {
 // Create a canvas and draw text onto it
 var canvas = document.createElement('canvas');
 var context = canvas.getContext('2d');
-context.font = '200px Arial';
+context.font = '50px Arial';
 var text = 'DFG';
 var textWidth = context.measureText(text).width;
-var textHeight = 200; // Set the height based on the font size
+var textHeight = 50; // Set the height based on the font size
 canvas.width = textWidth;
 canvas.height = textHeight; // Set the canvas height
 context.fillStyle = 'red'; // Set the fill color before drawing the text
@@ -132,6 +132,9 @@ context.fillText('DFG', canvas.width / 2, canvas.height / 2 + textHeight / 4); /
 
 // Set the position of the sprite
   sprite.position.set(2.54,0.0,7.22); // Adjust as needed
+  var scale = 0.5; // Adjust this value to change the size of the text
+  sprite.scale.set(textWidth * scale, textHeight * scale, 1);
+
 
 // Add the sprite to the scene
   scene.add(sprite);
