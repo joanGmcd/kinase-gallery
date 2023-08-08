@@ -74,18 +74,23 @@ loader.load('overview.wrl', function (object) {
   var geometriesByType = {
     Cylinder: [],
     Mesh: [],
+    Sphere: [],
+    
   };
 object.traverse(function (child) {
     if (child.geometry && child.geometry.type === 'CylinderGeometry') {
       geometriesByType.Cylinder.push(child);
     } else if (child.geometry && child.geometry.type === 'Mesh') {
       geometriesByType.Mesh.push(child);
-    }
+    } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
+      geometriesByType.Sphere.push(child);
   });
   // Creating buttons
   for (var type in geometriesByType) {
     var button = document.createElement('button');
-    button.innerHTML = 'Toggle ' + type;
+    button.innerHTML = type;
+    button.style.padding = '10px 20px';
+    button.style.fontSize = '200px';
     button.onclick = (function (type) {
       return function () {
         toggleGeometries(type);
@@ -106,9 +111,12 @@ object.traverse(function (child) {
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
   context.font = '200px Arial';
+  var text = 'DFG';
+  var textWidth = context.measureText(text).width;
+  canvas.width = textWidth;
+  context.textAlign = 'center'
   context.fillStyle = 'red';
-  context.textAlign = 'center';
-  context.fillText('DFG', canvas.width, canvas.height);
+  context.fillText('DFG', canvas.width/2, canvas.height/2);
 
 // Create a texture from the canvas
   var texture = new THREE.Texture(canvas); 
