@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Protein Structure</title>
+    <style>
+        /* Styling for the coordinates display */
+        #coordinates {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Display for coordinates -->
+    <div id="coordinates"></div>
+
+    <script type="module">
+        import * as THREE from '../three.module.js';
+        import { VRMLLoader } from '../VRMLLoader.js';
+        import { OrbitControls } from '../OrbitControls.js';
+
+        // Variables
+        var raycaster = new THREE.Raycaster();
+        var mouse = new THREE.Vector2();
+
+        // Event Listeners
+        window.addEventListener('mousemove', onMouseMove, false);
+
+        // Functions
+        function onMouseMove(event) {
+            // ... (same as before)
+        }
+
+        function toggleGeometries(type) {
+            // ... (same as before)
+        }
+
+        // Scene, Camera, Renderer
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Lighting
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        var light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+        var pointLight = new THREE.PointLight(0xffffff, 0.5);
+        camera.add(pointLight);
+        scene.add(camera);
+
+        // Load VRML Object
+        var loader = new VRMLLoader();
+        loader.load('overview.wrl', function (object) {
+            // ... (same as before)
+        });
+
+        // Text Sprite
+        var canvas = document.createElement('canvas');
+        // ... (same as before)
+
+        // Animation Loop
+        var animate = function () {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        };
+
+        // Camera Position & Controls
+        camera.position.z = 5;
+        var controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        // Start Animation
+        animate();
+    </script>
+</body>
+
+</html>
