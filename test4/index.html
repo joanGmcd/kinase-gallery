@@ -6,82 +6,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Protein Structure</title>
     <style>
-        /* Styling for the coordinates display */
         #coordinates {
             position: absolute;
             top: 10px;
             right: 10px;
             color: green;
         }
+
+        button {
+            padding: 10px 20px;
+            font-size: 25px;
+            margin: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <!-- Display for coordinates -->
     <div id="coordinates"></div>
-
     <script type="module">
         import * as THREE from '../three.module.js';
         import { VRMLLoader } from '../VRMLLoader.js';
         import { OrbitControls } from '../OrbitControls.js';
 
-        // Variables
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
 
-        // Event Listeners
         window.addEventListener('mousemove', onMouseMove, false);
 
-        // Functions
         function onMouseMove(event) {
-            // ... (same as before)
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            var intersects = raycaster.intersectObjects(scene.children);
+            if (intersects.length > 0) {
+                var intersection = intersects[0].point;
+                var coords = `${intersection.x.toFixed(2)}, ${intersection.y.toFixed(2)}, ${intersection.z.toFixed(2)}`;
+                document.getElementById('coordinates').textContent = coords;
+            }
         }
 
-        function toggleGeometries(type) {
-            // ... (same as before)
-        }
-
-        // Scene, Camera, Renderer
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Lighting
         var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
+
         var light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(10, 10, 10);
         scene.add(light);
+
         var pointLight = new THREE.PointLight(0xffffff, 0.5);
         camera.add(pointLight);
         scene.add(camera);
 
-        // Load VRML Object
         var loader = new VRMLLoader();
         loader.load('overview.wrl', function (object) {
-            // ... (same as before)
+            scene.add(object);
+            var geometriesByType = {
+                Cylinder: [],
+                Mesh: [],
+                Sphere: [],
+            };
+            object.traverse(function (child) {
+                if (child.geometry && child.geometry.type === 'CylinderGeometry') {
+                    geometriesByType.Cylinder.push(child);
+                } else if (child.geometry && child.geometry.type === 'Mesh') {
+                    geometriesByType.Mesh.push(child);
+                } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
+                    geometriesByType.Sphere.push(child);
+                }
+            });
+
+            for (var type in geometriesByType) {
+                var button = document.createElement('button');
+                button.innerHTML = type;
+                button.onclick = (function (type) {
+                    return function () {
+                        toggleGeometries(type);
+                    };
+                })(type);
+                document.body.appendChild(button);
+            }
+
+            function toggleGeometries(type) {
+                var geometries = geometriesByType[type];
+                for (var i = 0; i < geometries.length; i++) {
+                    geometries[i].visible = !geometries[i].visible;
+                }
+            }
         });
 
-        // Text Sprite
         var canvas = document.createElement('canvas');
-        // ... (same as before)
+        var context = canvas.getContext('2d');
+        context.font = '50px Arial';
+        var text = 'DFG';
+        var textWidth = context.measureText(text).width;
+        var textHeight = 50;
+        canvas.width = textWidth;
+        canvas.height = textHeight;
+        context.fillStyle = 'red';
+        context.textAlign = 'center';
+        context.fillText('DFG', canvas.width / 2, canvas.height / 2 + textHeight / 4);
 
-        // Animation Loop
+        var texture = new THREE.Texture(canvas);
+        texture.needsUpdate = true;
+
+        var material = new THREE.SpriteMaterial({ map: texture });
+        var sprite = new THREE.Sprite(material);
+        sprite.position.set(2.54, 0.05, 7.22);
+        var scale = 0.1;
+        sprite.scale.set(textWidth * scale, textHeight * scale, 1);
+        scene.add(sprite);
+
         var animate = function () {
             requestAnimationFrame(animate);
-            controls.update();
+            sprite.quaternion.copy(camera.quaternion);
             renderer.render(scene, camera);
         };
 
-        // Camera Position & Controls
         camera.position.z = 5;
+
         var controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
 
-        // Start Animation
         animate();
     </script>
 </body>
