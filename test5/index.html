@@ -27,7 +27,6 @@
             left: 10px;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
         }
 
         #title {
@@ -45,7 +44,7 @@
         }
 
         button:hover {
-            background-color: rgba(255, 255, 255, 0.9); /* slightly less transparent white on hover */
+            border: 2px solid rgba(255, 255, 255, 0.9);
         }
         
         .highlighted {
@@ -192,7 +191,11 @@
                 //button.innerHTML = filename;
                 button.innerHTML = fileAliases[filename] || filename;  // Use the alias if available, otherwise use the filename
 
-                button.classList.add('faded'); // Initially set all buttons to faded
+                if (filename === defaultdisplay) {
+                    button.classList.add('highlighted');
+                } else {
+                    button.classList.add('faded');
+                }
                 button.onclick = function () {
                     object.visible = !object.visible;
                     // Toggle the highlighted class based on object visibility
