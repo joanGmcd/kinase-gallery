@@ -72,6 +72,9 @@
         <div id="title"></div>
     </div>    
     <script type="module">
+        import * as THREE from '../three.module.js';
+        import { VRMLLoader } from '../VRMLLoader.js';
+        import { OrbitControls } from '../OrbitControls.js';
         // Load the configuration file
         fetch('config.json')
         .then(response => response.json())
@@ -85,10 +88,6 @@
         const labelColor = config.labelColor;
         const labelCoords = config.labelCoords;
         const labelText = config.labelText;
-
-        import * as THREE from '../three.module.js';
-        import { VRMLLoader } from '../VRMLLoader.js';
-        import { OrbitControls } from '../OrbitControls.js';
     
         document.getElementById('title').textContent = title;
 
