@@ -23,7 +23,7 @@
         }
         #navigation {
             position: absolute;
-            top: 60px;
+            top: 10px;
             right: 10px;
             display: flex;
             flex-direction: column;
@@ -47,15 +47,6 @@
         button:hover {
             background-color: rgba(255, 255, 255, 0.9); /* slightly less transparent white on hover */
         }
-        button.active {
-            background-color: rgba(255, 255, 255, 0.9); /* Highlighted color for active state */
-            color: black;
-        }
-        button.inactive {
-            background-color: rgba(255, 255, 255, 0.5); /* Faded color for inactive state */
-            color: gray;
-        }
-        
     </style>
 </head>
 
@@ -75,15 +66,8 @@
         import { OrbitControls } from '../OrbitControls.js';
 
         const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl'];
-        const aliases = {
-            '1rqq.wrl': 'Active/INSR',
-            '1irk.wrl': 'DFGout/INSR',
-            '1rjb.wrl': 'DFGout/FLT3',
-            '1t45.wrl': 'DFGout/KIT',
-            '2ogv.wrl': 'DFGout/CSF1R'
-        };        
         const currentDirectory = "https://joangmcd.github.io/kinase-gallery/test5/";
-        const title = "Receptor tyrosine kinases";  // Replace with your desired title
+        const title = "Your Title Here";  // Replace with your desired title
         const defaultdisplay = "1rjb.wrl";  // Set the default object to be displayed
         
         document.getElementById('title').textContent = title;
@@ -120,7 +104,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        var ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
 
         var light = new THREE.DirectionalLight(0xffffff, 1);
@@ -190,12 +174,9 @@
                 });
 
                 var button = document.createElement('button');
-                button.innerHTML = aliases[filename] || filename;
-                button.className = object.visible ? 'active' : 'inactive';  // Set initial class based on visibility
+                button.innerHTML = filename;
                 button.onclick = function () {
-                    const object = objectsByFilename[filename];
                     object.visible = !object.visible;
-                    button.className = object.visible ? 'active' : 'inactive';  // Toggle class based on visibility
                 };
                 document.getElementById('buttonContainer').appendChild(button);
             });
@@ -211,10 +192,7 @@
         ['Cylinder', 'Mesh', 'Sphere'].forEach((type) => {
             var button = document.createElement('button');
             button.innerHTML = type;
-            button.className = object.visible ? 'active' : 'inactive';  // Set initial class based on visibility
             button.onclick = function () {
-                const object = objectsByFilename[type];
-                object.visible = !object.visible;
                 toggleObjectType(type);
             };
             document.getElementById('buttonContainer').appendChild(button);
