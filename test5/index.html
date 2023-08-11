@@ -127,6 +127,12 @@
             textSprites.forEach(sprite => sprite.visible = !sprite.visible);
         };
         document.getElementById('buttonContainer').appendChild(labelButton);
+        var loader = new VRMLLoader();
+        loader.load('1rqq.wrl', function (object) {
+            scene.add(object);
+        });
+
+        camera.position.z = 50;  // Adjusting the camera's position to ensure the model is in view
 
         animate();
     </script>
