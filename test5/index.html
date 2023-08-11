@@ -52,12 +52,10 @@
         import { VRMLLoader } from '../VRMLLoader.js';
         import { OrbitControls } from '../OrbitControls.js';
 
-        // Define your list of filenames here
-        const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl']; // Add more filenames as needed
+        const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl'];
 
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
-
         window.addEventListener('mousemove', onMouseMove, false);
 
         function onMouseMove(event) {
@@ -118,7 +116,7 @@
                 button.onclick = function () {
                     object.visible = !object.visible;
                 };
-                document.body.appendChild(button);
+                document.getElementById('buttonContainer').appendChild(button);
             });
         });
 
@@ -130,7 +128,7 @@
                     toggleGeometries(type);
                 };
             })(type);
-            document.body.appendChild(button);
+            document.getElementById('buttonContainer').appendChild(button);
         }
 
         function toggleGeometries(type) {
@@ -163,15 +161,13 @@
         scene.add(sprite);
 
         var animate = function () {
-          requestAnimationFrame(animate);
-          controls.update();  // Force update the controls on every frame
-          sprite.quaternion.copy(camera.quaternion);
-          renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+            controls.update();
+            sprite.quaternion.copy(camera.quaternion);
+            renderer.render(scene, camera);
         };
 
         camera.position.z = 5;
-        camera.aspect = document.getElementById('rendererContainer').offsetWidth / document.getElementById('rendererContainer').offsetHeight;
-        camera.updateProjectionMatrix();
 
         var controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
