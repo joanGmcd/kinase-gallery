@@ -23,7 +23,7 @@
         }
         #navigation {
             position: absolute;
-            top: 10px;
+            top: 60px;
             right: 10px;
             display: flex;
             flex-direction: column;
@@ -66,8 +66,15 @@
         import { OrbitControls } from '../OrbitControls.js';
 
         const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl'];
+        const aliases = {
+            '1rqq.wrl': 'Active/INSR',
+            '1irk.wrl': 'DFGout/INSR',
+            '1rjb.wrl': 'DFGout/FLT3',
+            '1t45.wrl': 'DFGout/KIT',
+            '2ogv.wrl': 'DFGout/CSF1R'
+        };        
         const currentDirectory = "https://joangmcd.github.io/kinase-gallery/test5/";
-        const title = "Your Title Here";  // Replace with your desired title
+        const title = "Receptor tyrosine kinases";  // Replace with your desired title
         const defaultdisplay = "1rjb.wrl";  // Set the default object to be displayed
         
         document.getElementById('title').textContent = title;
@@ -104,7 +111,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
         scene.add(ambientLight);
 
         var light = new THREE.DirectionalLight(0xffffff, 1);
@@ -174,8 +181,9 @@
                 });
 
                 var button = document.createElement('button');
-                button.innerHTML = filename;
+                button.innerHTML = aliases[filename] || filename;
                 button.onclick = function () {
+                    const object = objectsByFilename[filename];
                     object.visible = !object.visible;
                 };
                 document.getElementById('buttonContainer').appendChild(button);
