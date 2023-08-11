@@ -4,7 +4,7 @@
         "3eta_2.wrl": "DFGout/INSR",
         "1rqq_2.wrl": "Active/INSR",
         "3eta_mesh_2.wrl": "Surf.|DFGout",
-        "1rqq_mesh_2.wrl": "Surf.|Active",
+        "1rqq_mesh_2.wrl": "Surf.|Active"
     },
     "currentDirectory": "https://joangmcd.github.io/kinase-gallery/insr_4/",
     "title": "INSR | Active/Inactive",
