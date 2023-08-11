@@ -1,0 +1,21 @@
+{
+    "filenames": ["3eta_2.wrl", "1rqq_2.wrl", "3eta_mesh_2.wrl", "1rqq_mesh_2.wrl"],
+    "fileAliases": {
+        "3eta_2.wrl": "DFGout/INSR",
+        "1rqq_2.wrl": "Active/INSR",
+        "3eta_mesh_2.wrl": "Surf.|DFGout",
+        "1rqq_mesh_2.wrl": "Surf.|Active",
+    },
+    "currentDirectory": "https://joangmcd.github.io/kinase-gallery/insr_4/",
+    "title": "INSR | Active/Inactive",
+    "defaultdisplay": "1rjb.wrl",
+    "labelColor": "red",
+    "labelText": ["DFG"],
+    "labelCoords": {
+        "DFG": {
+            "x": -4.06,
+            "y": 7.00,
+            "z": 1.58
+        }
+    }
+}
