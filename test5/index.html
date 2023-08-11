@@ -210,12 +210,11 @@
 
         ['Cylinder', 'Mesh', 'Sphere'].forEach((type) => {
             var button = document.createElement('button');
-            button.className = object.visible ? 'active' : 'inactive';  // Set initial class based on visibility
             button.innerHTML = type;
+            button.className = object.visible ? 'active' : 'inactive';  // Set initial class based on visibility
             button.onclick = function () {
-                const object = objectsByFilename[filename];
+                const object = objectsByFilename[type];
                 object.visible = !object.visible;
-                button.className = object.visible ? 'active' : 'inactive';  // Toggle class based on visibility
                 toggleObjectType(type);
             };
             document.getElementById('buttonContainer').appendChild(button);
