@@ -29,7 +29,7 @@
         import { OrbitControls } from '../OrbitControls.js';
 
         // Define your list of filenames here
-        const filenames = ['1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wr', '1rqq.wrl']; // Add more filenames as needed
+        const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl']; // Add more filenames as needed
 
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
@@ -65,15 +65,20 @@
         camera.add(pointLight);
         scene.add(camera);
 
+        var geometriesByType = {
+            Cylinder: [],
+            Mesh: [],
+            Sphere: [],
+        };
+
+        var objectsByFilename = {};
+
         filenames.forEach((filename) => {
             const loader = new VRMLLoader();
             loader.load(filename, function (object) {
                 scene.add(object);
-                var geometriesByType = {
-                    Cylinder: [],
-                    Mesh: [],
-                    Sphere: [],
-                };
+                objectsByFilename[filename] = object;
+
                 object.traverse(function (child) {
                     if (child.geometry && child.geometry.type === 'CylinderGeometry') {
                         geometriesByType.Cylinder.push(child);
@@ -84,25 +89,32 @@
                     }
                 });
 
-                for (var type in geometriesByType) {
-                    var button = document.createElement('button');
-                    button.innerHTML = type;
-                    button.onclick = (function (type) {
-                        return function () {
-                            toggleGeometries(type);
-                        };
-                    })(type);
-                    document.body.appendChild(button);
-                }
-
-                function toggleGeometries(type) {
-                    var geometries = geometriesByType[type];
-                    for (var i = 0; i < geometries.length; i++) {
-                        geometries[i].visible = !geometries[i].visible;
-                    }
-                }
+                var button = document.createElement('button');
+                button.innerHTML = filename;
+                button.onclick = function () {
+                    object.visible = !object.visible;
+                };
+                document.body.appendChild(button);
             });
         });
+
+        for (var type in geometriesByType) {
+            var button = document.createElement('button');
+            button.innerHTML = type;
+            button.onclick = (function (type) {
+                return function () {
+                    toggleGeometries(type);
+                };
+            })(type);
+            document.body.appendChild(button);
+        }
+
+        function toggleGeometries(type) {
+            var geometries = geometriesByType[type];
+            for (var i = 0; i < geometries.length; i++) {
+                geometries[i].visible = !geometries[i].visible;
+            }
+        }
 
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
