@@ -39,15 +39,19 @@
             font-size: 12px;
             margin: 5px;
             background-color: rgba(255, 255, 255, 0.7); /* semi-transparent white */
-            border: 2px solid transparent; /* Add a transparent border by default */
+            border: 1px solid transparent; /* Add a transparent border by default */
             box-sizing: border-box; /* Ensure border doesn't affect overall size */
             cursor: pointer;
         }
 
         button:hover {
-            border-color: rgba(255, 255, 255, 0.9);
+            border-color: rgba(255, 255, 255, 0.7);
         }
         
+        button.active {
+            border: 2px solid;
+            border-color: rgba(0, 128, 0, 0.7); /* Change this to your desired color */
+        }
         .highlighted {
             background-color: rgba(0, 128, 0, 0.7); /* semi-transparent green */
         }
@@ -250,6 +254,22 @@
 
         camera.position.z = 50;  // Adjusting the camera's position to ensure the model is in view
 
+        // Get all buttons
+        const buttons = document.querySelectorAll('button');
+
+        // Add click event listener to each button
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to the clicked button
+                this.classList.add('active');
+            });
+        });
+        
         animate();
     </script>
 </body>
