@@ -74,6 +74,8 @@
         light.position.set(10, 10, 10);
         scene.add(light);
 
+        var textSprites = [];  // List to keep track of all text sprites
+
         var pointLight = new THREE.PointLight(0xffffff, 0.5);
         camera.add(pointLight);
         scene.add(camera);
@@ -107,6 +109,30 @@
 
         createTextSprite('DFG', { x: -4.06, y: 8.84, z: 1.58 });
 
+        filenames.forEach((filename) => {
+            const loader = new VRMLLoader();
+            loader.load(filename, function (object) {
+                scene.add(object);
+
+                object.traverse(function (child) {
+                    if (child.geometry && child.geometry.type === 'CylinderGeometry') {
+                        geometriesByType.Cylinder.push(child);
+                    } else if (child.geometry && child.geometry.type === 'Mesh') {
+                        geometriesByType.Mesh.push(child);
+                    } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
+                        geometriesByType.Sphere.push(child);
+                    }
+                });
+
+                var button = document.createElement('button');
+                button.innerHTML = filename;
+                button.onclick = function () {
+                    object.visible = !object.visible;
+                };
+                document.getElementById('buttonContainer').appendChild(button);
+            });
+        });
+
         var animate = function () {
             requestAnimationFrame(animate);
             controls.update();
@@ -127,10 +153,6 @@
             textSprites.forEach(sprite => sprite.visible = !sprite.visible);
         };
         document.getElementById('buttonContainer').appendChild(labelButton);
-        var loader = new VRMLLoader();
-        loader.load('1rqq.wrl', function (object) {
-            scene.add(object);
-        });
 
         camera.position.z = 50;  // Adjusting the camera's position to ensure the model is in view
 
