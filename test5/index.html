@@ -107,22 +107,14 @@
             textSprites.push(sprite);  // Add the sprite to the list
         }
 
-        createTextSprite('DFG', { x: -4.06, y: 8.84, z: 1.58 });
+        createTextSprite('DFG', { x: -4.06, y: 7.00, z: 1.58 });
 
         filenames.forEach((filename) => {
             const loader = new VRMLLoader();
             loader.load(filename, function (object) {
                 scene.add(object);
 
-                object.traverse(function (child) {
-                    if (child.geometry && child.geometry.type === 'CylinderGeometry') {
-                        geometriesByType.Cylinder.push(child);
-                    } else if (child.geometry && child.geometry.type === 'Mesh') {
-                        geometriesByType.Mesh.push(child);
-                    } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
-                        geometriesByType.Sphere.push(child);
-                    }
-                });
+                object.visible = false;  // Initially set all objects to invisible
 
                 var button = document.createElement('button');
                 button.innerHTML = filename;
