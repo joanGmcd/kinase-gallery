@@ -43,12 +43,10 @@
         import { VRMLLoader } from '../VRMLLoader.js';
         import { OrbitControls } from '../OrbitControls.js';
 
-        // Define your list of filenames here
-        const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl']; // Add more filenames as needed
+        const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl'];
 
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
-
         window.addEventListener('mousemove', onMouseMove, false);
 
         function onMouseMove(event) {
@@ -80,84 +78,40 @@
         camera.add(pointLight);
         scene.add(camera);
 
-        var geometriesByType = {
-            Cylinder: [],
-            Mesh: [],
-            Sphere: [],
-        };
+        var textSprites = [];  // List to keep track of all text sprites
 
-        var objectsByFilename = {};
+        function createTextSprite(text, position) {
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            context.font = '50px Arial';
+            var textWidth = context.measureText(text).width;
+            var textHeight = 50;
+            canvas.width = textWidth;
+            canvas.height = textHeight;
+            context.fillStyle = 'red';
+            context.textAlign = 'center';
+            context.fillText(text, canvas.width / 2, canvas.height / 2 + textHeight / 4);
 
-        filenames.forEach((filename) => {
-            const loader = new VRMLLoader();
-            loader.load(filename, function (object) {
-                scene.add(object);
-                objectsByFilename[filename] = object;
+            var texture = new THREE.Texture(canvas);
+            texture.needsUpdate = true;
 
-                object.traverse(function (child) {
-                    if (child.geometry && child.geometry.type === 'CylinderGeometry') {
-                        geometriesByType.Cylinder.push(child);
-                    } else if (child.geometry && child.geometry.type === 'Mesh') {
-                        geometriesByType.Mesh.push(child);
-                    } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
-                        geometriesByType.Sphere.push(child);
-                    }
-                });
+            var material = new THREE.SpriteMaterial({ map: texture });
+            var sprite = new THREE.Sprite(material);
+            sprite.position.set(position.x, position.y, position.z);
+            var scale = 0.1;
+            sprite.scale.set(textWidth * scale, textHeight * scale, 1);
+            scene.add(sprite);
 
-                var button = document.createElement('button');
-                button.innerHTML = filename;
-                button.onclick = function () {
-                    object.visible = !object.visible;
-                };
-                document.body.appendChild(button);
-            });
-        });
-
-        for (var type in geometriesByType) {
-            var button = document.createElement('button');
-            button.innerHTML = type;
-            button.onclick = (function (type) {
-                return function () {
-                    toggleGeometries(type);
-                };
-            })(type);
-            document.body.appendChild(button);
+            textSprites.push(sprite);  // Add the sprite to the list
         }
 
-        function toggleGeometries(type) {
-            var geometries = geometriesByType[type];
-            for (var i = 0; i < geometries.length; i++) {
-                geometries[i].visible = !geometries[i].visible;
-            }
-        }
-
-        var canvas = document.createElement('canvas');
-        var context = canvas.getContext('2d');
-        context.font = '50px Arial';
-        var text = 'DFG';
-        var textWidth = context.measureText(text).width;
-        var textHeight = 50;
-        canvas.width = textWidth;
-        canvas.height = textHeight;
-        context.fillStyle = 'red';
-        context.textAlign = 'center';
-        context.fillText('DFG', canvas.width / 2, canvas.height / 2 + textHeight / 4);
-
-        var texture = new THREE.Texture(canvas);
-        texture.needsUpdate = true;
-
-        var material = new THREE.SpriteMaterial({ map: texture });
-        var sprite = new THREE.Sprite(material);
-        sprite.position.set(-4.06, 8.84, 1.58);
-        var scale = 0.1;
-        sprite.scale.set(textWidth * scale, textHeight * scale, 1);
-        scene.add(sprite);
+        createTextSprite('DFG', { x: -4.06, y: 8.84, z: 1.58 });
 
         var animate = function () {
-          requestAnimationFrame(animate);
-          controls.update();  // Force update the controls on every frame
-          sprite.quaternion.copy(camera.quaternion);
-          renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+            controls.update();
+            textSprites.forEach(sprite => sprite.quaternion.copy(camera.quaternion));  // Ensure all text sprites face the camera
+            renderer.render(scene, camera);
         };
 
         camera.position.z = 5;
@@ -165,6 +119,14 @@
         var controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
+
+        // Button to toggle visibility of all text sprites
+        var labelButton = document.createElement('button');
+        labelButton.innerHTML = 'Labels';
+        labelButton.onclick = function () {
+            textSprites.forEach(sprite => sprite.visible = !sprite.visible);
+        };
+        document.getElementById('buttonContainer').appendChild(labelButton);
 
         animate();
     </script>
