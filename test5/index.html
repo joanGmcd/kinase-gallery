@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Protein Structure</title>
     <style>
-        .highlighted {
-            background-color: rgba(0, 128, 0, 0.7); /* semi-transparent green */
-        }
         #coordinates {
             position: absolute;
             top: 10px;
@@ -49,6 +46,14 @@
 
         button:hover {
             background-color: rgba(255, 255, 255, 0.9); /* slightly less transparent white on hover */
+        }
+        
+        .highlighted {
+            background-color: rgba(0, 128, 0, 0.7); /* semi-transparent green */
+        }
+        
+        .faded {
+            background-color: rgba(255, 255, 255, 0.5); /* more transparent white */
         }
     </style>
 </head>
@@ -178,13 +183,16 @@
 
                 var button = document.createElement('button');
                 button.innerHTML = filename;
+                button.classList.add('faded'); // Initially set all buttons to faded
                 button.onclick = function () {
                     object.visible = !object.visible;
                     // Toggle the highlighted class based on object visibility
                     if (object.visible) {
                         button.classList.add('highlighted');
+                        button.classList.remove('faded');
                     } else {
                         button.classList.remove('highlighted');
+                        button.classList.add('faded');
                     }
                 };
                 document.getElementById('buttonContainer').appendChild(button);
