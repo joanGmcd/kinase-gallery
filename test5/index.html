@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Protein Structure</title>
     <style>
+        .highlighted {
+            background-color: rgba(0, 128, 0, 0.7); /* semi-transparent green */
+        }
         #coordinates {
             position: absolute;
             top: 10px;
@@ -67,7 +70,7 @@
 
         const filenames = ['1rjb.wrl', '1rqq.wrl', '1irk.wrl', '1t45.wrl', '2ogv.wrl'];
         const currentDirectory = "https://joangmcd.github.io/kinase-gallery/test5/";
-        const title = "Your Title Here";  // Replace with your desired title
+        const title = "Receptor Tyr kinases";  // Replace with your desired title
         const defaultdisplay = "1rjb.wrl";  // Set the default object to be displayed
         
         document.getElementById('title').textContent = title;
@@ -177,10 +180,15 @@
                 button.innerHTML = filename;
                 button.onclick = function () {
                     object.visible = !object.visible;
+                    // Toggle the highlighted class based on object visibility
+                    if (object.visible) {
+                        button.classList.add('highlighted');
+                    } else {
+                        button.classList.remove('highlighted');
+                    }
                 };
                 document.getElementById('buttonContainer').appendChild(button);
             });
-        });
 
         // Toggle visibility of specific object types
         function toggleObjectType(type) {
