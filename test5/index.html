@@ -8,8 +8,8 @@
     <style>
         #coordinates {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            bottom: 10px;
+            left: 10px;
             color: green;
         }
 
@@ -23,8 +23,8 @@
         }
         #navigation {
             position: absolute;
-            top: 50px;
-            right: 10px;
+            bottom: 50px;
+            left: 10px;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
@@ -32,7 +32,7 @@
 
         #title {
             color: white;
-            margin-top: 5px;
+            margin-bottom: 5px;
         }
         
         button {
@@ -74,6 +74,13 @@
         import { OrbitControls } from '../OrbitControls.js';
 
         const filenames = ['1rjb.wrl', '1rqq.wrl', '1irk.wrl', '1t45.wrl', '2ogv.wrl'];
+        const fileAliases = {
+            '1rjb.wrl': 'DFGout/FLT3',
+            '1rqq.wrl': 'Active/INSR',
+            '1irk.wrl': 'DFGout/INSR',
+            '1t45.wrl': 'DFGout/KIT',
+            '2ogv.wrl': 'DFGout/FMS'
+        };
         const currentDirectory = "https://joangmcd.github.io/kinase-gallery/test5/";
         const title = "Receptor Tyr kinases";  // Replace with your desired title
         const defaultdisplay = "1rjb.wrl";  // Set the default object to be displayed
@@ -182,7 +189,9 @@
                 });
 
                 var button = document.createElement('button');
-                button.innerHTML = filename;
+                //button.innerHTML = filename;
+                button.innerHTML = fileAliases[filename] || filename;  // Use the alias if available, otherwise use the filename
+
                 button.classList.add('faded'); // Initially set all buttons to faded
                 button.onclick = function () {
                     object.visible = !object.visible;
