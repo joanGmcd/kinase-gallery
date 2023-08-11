@@ -1,0 +1,21 @@
+{
+    "filenames": ["1rjb.wrl", "1rqq.wrl", "1irk.wrl", "1t45.wrl", "2ogv.wrl"],
+    "fileAliases": {
+        "1rjb.wrl": "DFGout/FLT3",
+        "1rqq.wrl": "Active/INSR",
+        "1irk.wrl": "DFGout/INSR",
+        "1t45.wrl": "DFGout/KIT",
+        "2ogv.wrl": "DFGout/FMS"
+    },
+    "currentDirectory": "https://joangmcd.github.io/kinase-gallery/test5/",
+    "title": "Receptor Tyr kinases",
+    "defaultdisplay": "1rjb.wrl",
+    "labelColor": "red",
+    "coordinates": {
+        "DFG": {
+            "x": -4.06,
+            "y": 7.00,
+            "z": 1.58
+        }
+    }
+}
