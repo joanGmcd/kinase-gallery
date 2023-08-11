@@ -32,30 +32,23 @@
         button:hover {
             background-color: rgba(255, 255, 255, 0.9); /* slightly less transparent white on hover */
         }
-
-        #rendererContainer {
-            position: relative;
-            width: 90%;  /* Adjust this value as needed */
-            height: 90%; /* Adjust this value as needed */
-            overflow: hidden;
-            margin: 0 auto; /* Center the container horizontally */
-        }
     </style>
 </head>
 
 <body>
     <div id="coordinates"></div>
     <div id="buttonContainer"></div>
-    <div id="rendererContainer"></div>
     <script type="module">
         import * as THREE from '../three.module.js';
         import { VRMLLoader } from '../VRMLLoader.js';
         import { OrbitControls } from '../OrbitControls.js';
 
-        const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl'];
+        // Define your list of filenames here
+        const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl']; // Add more filenames as needed
 
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
+
         window.addEventListener('mousemove', onMouseMove, false);
 
         function onMouseMove(event) {
@@ -73,8 +66,8 @@
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(document.getElementById('rendererContainer').offsetWidth, document.getElementById('rendererContainer').offsetHeight);
-        document.getElementById('rendererContainer').appendChild(renderer.domElement);
+        renderer.setSize(window.innerWidth / 1.1, window.innerHeight / 1.1);
+        document.body.appendChild(renderer.domElement);
 
         var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
@@ -94,8 +87,6 @@
         };
 
         var objectsByFilename = {};
-
-        var textSprites = []; // Array to store all text sprites
 
         filenames.forEach((filename) => {
             const loader = new VRMLLoader();
@@ -118,7 +109,7 @@
                 button.onclick = function () {
                     object.visible = !object.visible;
                 };
-                document.getElementById('buttonContainer').appendChild(button);
+                document.body.appendChild(button);
             });
         });
 
@@ -130,7 +121,7 @@
                     toggleGeometries(type);
                 };
             })(type);
-            document.getElementById('buttonContainer').appendChild(button);
+            document.body.appendChild(button);
         }
 
         function toggleGeometries(type) {
@@ -161,23 +152,12 @@
         var scale = 0.1;
         sprite.scale.set(textWidth * scale, textHeight * scale, 1);
         scene.add(sprite);
-        textSprites.push(sprite); // Add the sprite to the textSprites array
-
-        // Button to toggle text sprites
-        var textSpriteButton = document.createElement('button');
-        textSpriteButton.innerHTML = 'Toggle Text Sprites';
-        textSpriteButton.onclick = function () {
-            textSprites.forEach(sprite => {
-                sprite.visible = !sprite.visible;
-            });
-        };
-        document.getElementById('buttonContainer').appendChild(textSpriteButton);
 
         var animate = function () {
-            requestAnimationFrame(animate);
-            controls.update();
-            sprite.quaternion.copy(camera.quaternion);
-            renderer.render(scene, camera);
+          requestAnimationFrame(animate);
+          controls.update();  // Force update the controls on every frame
+          sprite.quaternion.copy(camera.quaternion);
+          renderer.render(scene, camera);
         };
 
         camera.position.z = 5;
