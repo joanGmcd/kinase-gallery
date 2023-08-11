@@ -8,14 +8,14 @@
     },
     "currentDirectory": "https://joangmcd.github.io/kinase-gallery/insr_4/",
     "title": "INSR | Active/Inactive",
-    "defaultdisplay": "1rjb.wrl",
+    "defaultdisplay": "3eta_2.wrl",
     "labelColor": "red",
     "labelText": ["DFG"],
     "labelCoords": {
         "DFG": {
-            "x": -4.06,
-            "y": 7.00,
-            "z": 1.58
+            "x": -8.4,
+            "y": 0.31,
+            "z": 17.06
         }
     }
 }
