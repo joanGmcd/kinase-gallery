@@ -21,7 +21,20 @@
             left: 10px;
             z-index: 1000;
         }
+        #navigation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
 
+        #title {
+            color: white;
+            margin-top: 5px;
+        }
+        
         button {
             padding: 8px 16px;
             font-size: 20px;
@@ -40,13 +53,35 @@
 <body>
     <div id="coordinates"></div>
     <div id="buttonContainer"></div>
+    <div id="navigation">
+        <div>
+            <button id="reverse">&#8592;</button>
+            <button id="forward">&#8594;</button>
+        </div>
+        <div id="title"></div>
+    </div>    
     <script type="module">
         import * as THREE from '../three.module.js';
         import { VRMLLoader } from '../VRMLLoader.js';
         import { OrbitControls } from '../OrbitControls.js';
 
         const filenames = ['1rqq.wrl', '1irk.wrl', '1rjb.wrl', '1t45.wrl', '2ogv.wrl'];
+        const currentDirectory = "https://joangmcd.github.io/kinase-gallery/test5/";
+        const title = "Your Title Here";  // Replace with your desired title
+        const defaultdisplay = "1rjb.wrl";  // Set the default object to be displayed
+        
+        document.getElementById('title').textContent = title;
 
+        document.getElementById('reverse').onclick = function () {
+            const currentNumber = parseInt(currentDirectory.split("test")[1].split("/")[0]);
+            window.location.href = currentDirectory.replace(`test${currentNumber}`, `test${currentNumber - 1}`);
+        };
+
+        document.getElementById('forward').onclick = function () {
+            const currentNumber = parseInt(currentDirectory.split("test")[1].split("/")[0]);
+            window.location.href = currentDirectory.replace(`test${currentNumber}`, `test${currentNumber + 1}`);
+        };
+        
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
         window.addEventListener('mousemove', onMouseMove, false);
@@ -122,7 +157,11 @@
             loader.load(filename, function (object) {
                 scene.add(object);
 
-                object.visible = false;  // Initially set all objects to invisible
+                if (filename === defaultdisplay) {
+                    object.visible = true;
+                } else {
+                    object.visible = false;
+                }
 
                 object.traverse(function (child) {
                     if (child.geometry && child.geometry.type === 'CylinderGeometry') {
