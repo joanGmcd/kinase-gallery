@@ -154,9 +154,10 @@
         scene.add(sprite);
 
         var animate = function () {
-            requestAnimationFrame(animate);
-            sprite.quaternion.copy(camera.quaternion);
-            renderer.render(scene, camera);
+          requestAnimationFrame(animate);
+          controls.update();  // Force update the controls on every frame
+          sprite.quaternion.copy(camera.quaternion);
+          renderer.render(scene, camera);
         };
 
         camera.position.z = 5;
