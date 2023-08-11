@@ -111,12 +111,28 @@
 
         createTextSprite('DFG', { x: -4.06, y: 7.00, z: 1.58 });
 
+        var geometriesByType = {
+            Cylinder: [],
+            Mesh: [],
+            Sphere: [],
+        };
+
         filenames.forEach((filename) => {
             const loader = new VRMLLoader();
             loader.load(filename, function (object) {
                 scene.add(object);
 
                 object.visible = false;  // Initially set all objects to invisible
+
+                object.traverse(function (child) {
+                    if (child.geometry && child.geometry.type === 'CylinderGeometry') {
+                        geometriesByType.Cylinder.push(child);
+                    } else if (child.geometry && child.geometry.type === 'BufferGeometry' && child instanceof THREE.Mesh) {
+                        geometriesByType.Mesh.push(child);
+                    } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
+                        geometriesByType.Sphere.push(child);
+                    }
+                });
 
                 var button = document.createElement('button');
                 button.innerHTML = filename;
@@ -129,10 +145,8 @@
 
         // Toggle visibility of specific object types
         function toggleObjectType(type) {
-            scene.traverse(function (child) {
-                if (child instanceof THREE[type]) {
-                    child.visible = !child.visible;
-                }
+            geometriesByType[type].forEach(function (child) {
+                child.visible = !child.visible;
             });
         }
 
@@ -144,6 +158,7 @@
             };
             document.getElementById('buttonContainer').appendChild(button);
         });
+        
         var animate = function () {
             requestAnimationFrame(animate);
             controls.update();
