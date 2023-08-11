@@ -1,0 +1,23 @@
+{
+    "filenames": ["braf_body.wrl", "braf_aloop.wrl", "cdk6_aloop.wrl", "insr_aloop.wrl", "tk_substrate.wrl", "stk_substrate.wrl"],
+    "fileAliases": {
+        "braf_body.wrl": "BRAF",
+        "braf_aloop.wrl": "DFGout|BRAF",
+        "cdk6_aloop.wrl": "DFGout|CDK6",
+        "insr_aloop.wrl": "DFGout|INSR",
+        "tk_substrate.wrl": "Sub.|TK",
+        "stk_substrate.wrl": "Sub.|STK"
+    },
+    "currentDirectory": "https://joangmcd.github.io/kinase-gallery/insr_4/",
+    "title": "DFGout | Pseudosubstrate",
+    "defaultdisplay": "braf_body.wrl",
+    "labelColor": "red",
+    "labelText": ["DFG"],
+    "labelCoords": {
+        "DFG": {
+            "x": -0.08,
+            "y": 2.85,
+            "z": -1.99
+        }
+    }
+}
