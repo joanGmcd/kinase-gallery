@@ -95,6 +95,8 @@
 
         var objectsByFilename = {};
 
+        var textSprites = []; // Array to store all text sprites
+
         filenames.forEach((filename) => {
             const loader = new VRMLLoader();
             loader.load(filename, function (object) {
@@ -159,6 +161,17 @@
         var scale = 0.1;
         sprite.scale.set(textWidth * scale, textHeight * scale, 1);
         scene.add(sprite);
+        textSprites.push(sprite); // Add the sprite to the textSprites array
+
+        // Button to toggle text sprites
+        var textSpriteButton = document.createElement('button');
+        textSpriteButton.innerHTML = 'Toggle Text Sprites';
+        textSpriteButton.onclick = function () {
+            textSprites.forEach(sprite => {
+                sprite.visible = !sprite.visible;
+            });
+        };
+        document.getElementById('buttonContainer').appendChild(textSpriteButton);
 
         var animate = function () {
             requestAnimationFrame(animate);
