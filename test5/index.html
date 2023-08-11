@@ -13,16 +13,31 @@
             color: green;
         }
 
+        #buttonContainer {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
         button {
-            padding: 10px 20px;
-            font-size: 25px;
-            margin: 10px;
+            padding: 8px 16px;
+            font-size: 20px;
+            margin: 5px;
+            background-color: rgba(255, 255, 255, 0.7); /* semi-transparent white */
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.9); /* slightly less transparent white on hover */
         }
     </style>
 </head>
 
 <body>
     <div id="coordinates"></div>
+    <div id="buttonContainer"></div>
     <script type="module">
         import * as THREE from '../three.module.js';
         import { VRMLLoader } from '../VRMLLoader.js';
