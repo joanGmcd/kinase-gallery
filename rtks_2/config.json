@@ -11,7 +11,7 @@
     "title": "Receptor Tyr kinases",
     "defaultdisplay": "1rjb.wrl",
     "labelColor": "red",
-    "labelText": ["DFG"]
+    "labelText": ["DFG"],
     "labelCoords": {
         "DFG": {
             "x": -4.06,
