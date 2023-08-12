@@ -1,0 +1,30 @@
+{
+    "filenames": ["active_abl.wrl", "active_abl_120-146.wrl", "active_abl_123-160.wrl", "active_abl_126-162.wrl", "active_cdk6.wrl", "active_cdk6_120-146.wrl", "active_cdk6_126-162.wrl", "active_cdk6_123-160.wrl", "dfgout_abl.wrl", "dfgout_abl_126-162.wrl", "dfgout_abl_154-162.wrl", "dfgout_cdk6.wrl", "dfgout_cdk6_126-162.wrl"],
+    "fileAliases": {
+        "active_abl.wrl": "Active|TK(ABL)",
+        "active_cdk6.wrl": "Active|STK(CDK6)",
+        "dfgout_abl.wrl":  "DFGout|TK(ABL)",
+        "dfgout_cdk6.wrl":  "DFGout|STK(CDK6)",
+        "active_abl_120-146.wrl":  "Active|120-146|TK",
+        "active_cdk6_120-146.wrl":  "Active|120-146|STK",
+        "active_abl_123-160.wrl":  "Active|123-160|TK",
+        "active_cdk6_123-160.wrl":  "Active|123-160|STK",
+        "active_abl_126-162.wrl":  "Active|126-162|TK",
+        "active_cdk6_126-162.wrl":  "Active|126-162|STK",
+        "dfgout_abl_126-162.wrl":  "DFGout|126-162|TK",
+        "dfgout_abl_154-162.wrl":  "DFGout|154-162|TK",
+        "dfgout_cdk6_126-162.wrl":  "DFGout|126-162|STK"
+    },
+    "currentDirectory": "https://joangmcd.github.io/kinase-gallery/stk-vs-tk_6/",
+    "title": "TK vs STK interactions",
+    "defaultdisplay": "active_cdk6.wrl",
+    "labelColor": "red",
+    "labelText": ["DFG"],
+    "labelCoords": {
+        "DFG": {
+            "x": -0.08,
+            "y": 2.85,
+            "z": -1.99
+        }
+    }
+}
