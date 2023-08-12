@@ -1,7 +1,8 @@
 {
-    "filenames": ["braf_body.wrl", "braf_aloop.wrl", "cdk6_aloop.wrl", "insr_aloop.wrl", "tk_substrate.wrl", "stk_substrate.wrl"],
+    "filenames": ["braf_active.wrl", "braf_body.wrl", "braf_aloop.wrl", "cdk6_aloop.wrl", "insr_aloop.wrl", "tk_substrate.wrl", "stk_substrate.wrl"],
     "fileAliases": {
-        "braf_body.wrl": "BRAF",
+        "braf_active.wrl": "Active|BRAF",
+        "braf_body.wrl": "body|BRAF",
         "braf_aloop.wrl": "DFGout|BRAF",
         "cdk6_aloop.wrl": "DFGout|CDK6",
         "insr_aloop.wrl": "DFGout|INSR",
