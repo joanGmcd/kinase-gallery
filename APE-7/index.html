@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptor Tyr kinases</title>
+    <style>
+        #coordinates {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: green;
+        }
+
+        #buttonContainer {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        #navigation {
+            position: absolute;
+            bottom: 50px;
+            left: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #title {
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        button {
+            padding: 8px 5px;
+            font-size: 12px;
+            margin: 5px;
+            background-color: rgba(255, 255, 255, 0.7); /* semi-transparent white */
+            border: 1px solid transparent; /* Add a transparent border by default */
+            box-sizing: border-box; /* Ensure border doesn't affect overall size */
+            cursor: pointer;
+        }
+
+        button:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        button.active {
+            border-color: rgba(255, 255, 255, 0.7); /* Change this to your desired color */
+        }
+        .highlighted {
+            background-color: rgba(0, 128, 0, 0.7); /* semi-transparent green */
+        }
+        
+        .faded {
+            background-color: rgba(255, 255, 255, 0.5); /* more transparent white */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="coordinates"></div>
+    <div id="buttonContainer"></div>
+    <div id="navigation">
+        <div>
+            <button id="reverse">&#8592;</button>
+            <button id="forward">&#8594;</button>
+        </div>
+        <div id="title"></div>
+    </div>    
+    <script type="module">
+        import * as THREE from '../three.module.js';
+        import { VRMLLoader } from '../VRMLLoader.js';
+        import { OrbitControls } from '../OrbitControls.js';
+        // Load the configuration file
+        fetch('config.json')
+        .then(response => response.json())
+        .then(config => {
+        // Use the configuration data
+        const filenames = config.filenames;
+        const fileAliases = config.fileAliases;
+        const currentDirectory = config.currentDirectory;
+        const title = config.title;
+        const defaultdisplay = config.defaultdisplay;
+        const labelColor = config.labelColor;
+        const labelCoords = config.labelCoords;
+        const labelText = config.labelText;
+    
+        document.getElementById('title').textContent = title;
+
+        document.getElementById('reverse').onclick = function () {
+            const currentNumber = parseInt(currentDirectory.split("test")[1].split("/")[0]);
+            window.location.href = currentDirectory.replace(`test${currentNumber}`, `test${currentNumber - 1}`);
+        };
+
+        document.getElementById('forward').onclick = function () {
+            const currentNumber = parseInt(currentDirectory.split("test")[1].split("/")[0]);
+            window.location.href = currentDirectory.replace(`test${currentNumber}`, `test${currentNumber + 1}`);
+        };
+        
+        var raycaster = new THREE.Raycaster();
+        var mouse = new THREE.Vector2();
+        window.addEventListener('mousemove', onMouseMove, false);
+
+        function onMouseMove(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            var intersects = raycaster.intersectObjects(scene.children);
+            if (intersects.length > 0) {
+                var intersection = intersects[0].point;
+                var coords = `${intersection.x.toFixed(2)}, ${intersection.y.toFixed(2)}, ${intersection.z.toFixed(2)}`;
+                document.getElementById('coordinates').textContent = coords;
+            }
+        }
+
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        var light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+
+        var textSprites = [];  // List to keep track of all text sprites
+
+        var pointLight = new THREE.PointLight(0xffffff, 0.5);
+        camera.add(pointLight);
+        scene.add(camera);
+
+        var textSprites = [];  // List to keep track of all text sprites
+
+        function createTextSprite(text, position) {
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            context.font = '50px Arial';
+            var textWidth = context.measureText(text).width;
+            var textHeight = 50;
+            canvas.width = textWidth;
+            canvas.height = textHeight;
+            context.fillStyle = labelColor;
+            context.textAlign = 'center';
+            context.fillText(text, canvas.width / 2, canvas.height / 2 + textHeight / 4);
+
+            var texture = new THREE.Texture(canvas);
+            texture.needsUpdate = true;
+
+            var material = new THREE.SpriteMaterial({ map: texture });
+            var sprite = new THREE.Sprite(material);
+            sprite.position.set(position.x, position.y, position.z);
+            var scale = 0.1;
+            sprite.scale.set(textWidth * scale, textHeight * scale, 1);
+            scene.add(sprite);
+
+            textSprites.push(sprite);  // Add the sprite to the list
+        }
+
+        labelText.forEach((label) => {
+          createTextSprite(label, labelCoords[label]);
+        });
+        var geometriesByType = {
+            Cylinder: [],
+            Mesh: [],
+            Sphere: [],
+        };
+
+        filenames.forEach((filename) => {
+            const loader = new VRMLLoader();
+            loader.load(filename, function (object) {
+                scene.add(object);
+
+                if (filename === defaultdisplay) {
+                    object.visible = true;
+                } else {
+                    object.visible = false;
+                }
+
+                object.traverse(function (child) {
+                    if (child.geometry && child.geometry.type === 'CylinderGeometry') {
+                        geometriesByType.Cylinder.push(child);
+                    } else if (child.geometry && child.geometry.type === 'BufferGeometry' && child instanceof THREE.Mesh) {
+                        geometriesByType.Mesh.push(child);
+                    } else if (child.geometry && child.geometry.type === 'SphereGeometry') {
+                        geometriesByType.Sphere.push(child);
+                    }
+                });
+
+                var button = document.createElement('button');
+                //button.innerHTML = filename;
+                button.innerHTML = fileAliases[filename] || filename;  // Use the alias if available, otherwise use the filename
+
+                if (filename === defaultdisplay) {
+                    button.classList.add('highlighted');
+                } else {
+                    button.classList.add('faded');
+                }
+                button.onclick = function () {
+                    object.visible = !object.visible;
+                    // Toggle the highlighted class based on object visibility
+                    if (object.visible) {
+                        button.classList.add('highlighted');
+                        button.classList.remove('faded');
+                    } else {
+                        button.classList.remove('highlighted');
+                        button.classList.add('faded');
+                    }
+                };
+                document.getElementById('buttonContainer').appendChild(button);
+            });
+        });
+        // Toggle visibility of specific object types
+        function toggleObjectType(type) {
+            geometriesByType[type].forEach(function (child) {
+                child.visible = !child.visible;
+            });
+        }
+
+        ['Cylinder', 'Mesh', 'Sphere'].forEach((type) => {
+            var button = document.createElement('button');
+            button.innerHTML = type;
+            button.onclick = function () {
+                toggleObjectType(type);
+            };
+            document.getElementById('buttonContainer').appendChild(button);
+        });
+        
+        var animate = function () {
+            requestAnimationFrame(animate);
+            controls.update();
+            textSprites.forEach(sprite => sprite.quaternion.copy(camera.quaternion));  // Ensure all text sprites face the camera
+            renderer.render(scene, camera);
+        };
+
+        camera.position.z = 5;
+
+        var controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        // Button to toggle visibility of all text sprites
+        var labelButton = document.createElement('button');
+        labelButton.innerHTML = 'Labels';
+        labelButton.onclick = function () {
+            textSprites.forEach(sprite => sprite.visible = !sprite.visible);
+        };
+        document.getElementById('buttonContainer').appendChild(labelButton);
+
+        camera.position.z = 50;  // Adjusting the camera's position to ensure the model is in view
+
+        // Get all buttons
+        const buttons = document.querySelectorAll('button');
+
+        // Add click event listener to each button
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to the clicked button
+                this.classList.add('active');
+            });
+        });
+        
+        animate();
+    });
+    </script>
+</body>
+
+</html>
