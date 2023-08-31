@@ -7,7 +7,7 @@
         "cdk6_v160k_l1-surf.wrl": "Surface"
     },
     "currentDirectory": "https://joangmcd.github.io/kinase-gallery/APE-7/",
-    "title": "Receptor Tyr kinases",
+    "title": "active CDK6 | RD-pocket",
     "defaultdisplay": "cdk6_v160k_l0.wrl",
     "labelColor": "red",
     "labelText": ["DFG", "HRD"],
