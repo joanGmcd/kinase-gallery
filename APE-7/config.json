@@ -1,5 +1,5 @@
 {
-    "filenames": ["active.wrl", "wt_v160.wrl", "mut_k160.wrl", "cl.wrl", "rdpocket.wrl", "lines.wrl", "surface.wrl"],
+    "filenames": ["active.wrl", "inactive.wrl", "wt_v160.wrl", "mut_k160.wrl", "cl.wrl", "rdpocket.wrl", "lines.wrl", "surface.wrl"],
     "fileAliases": {
         "active.wrl": "CDK6/active",
         "inactive.wrl": "CDK6/inactive",
@@ -13,8 +13,8 @@
     "currentDirectory": "https://joangmcd.github.io/kinase-gallery/APE-7/",
     "title": "active CDK6 | RD-pocket",
     "defaultdisplay": "active.wrl",
-    "labelColor": "red",
-    "labelText": ["DFG", "HRD"],
+    "labelColor": "white",
+    "labelText": ["DFG", "HRD", "APE-7"],
     "labelCoords": {
         "DFG": {
             "x": -4.06,
@@ -25,6 +25,11 @@
             "x": -4.45,
             "y": 0.51,
             "z": 0.31
+        },
+        "APE-7": {
+            "x": -4.01,
+            "y": -4.62,
+            "z": 7.58
         }
     }
 }
