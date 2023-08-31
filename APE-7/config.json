@@ -10,12 +10,16 @@
     "title": "Receptor Tyr kinases",
     "defaultdisplay": "cdk6_v160k_l0.wrl",
     "labelColor": "red",
-    "labelText": ["DFG"],
+    "labelText": ["DFG", "HRD"],
     "labelCoords": {
         "DFG": {
             "x": -4.06,
             "y": 7.00,
             "z": 1.58
-        }
+        },
+        "HRD": {
+            "x": -4.45,
+            "y": 0.51,
+            "z": 0.31
     }
 }
