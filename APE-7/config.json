@@ -1,7 +1,7 @@
 {
     "filenames": ["cdk6_v160k_l0.wrl", "cdk6_v160k_l1.wrl", "cdk6_v160k_l1_CL.wrl", "cdk6_v160k_l1-surf.wrl"],
     "fileAliases": {
-        "cdk6_v160k_l0": "CDK6/V160",
+        "cdk6_v160k_l0.wrl": "CDK6/V160",
         "cdk6_v160k_l1.wrl": "CDK6/K160",
         "cdk6_v160k_l1_CL.wrl": "Cl",
         "cdk6_v160k_l1-surf.wrl": "Surface"
@@ -21,5 +21,6 @@
             "x": -4.45,
             "y": 0.51,
             "z": 0.31
+        }
     }
 }
