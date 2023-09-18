@@ -1,0 +1,23 @@
+{
+    "filenames": ["overview.wrl"],
+    "fileAliases": {
+        "overview.wrl": "Kinase domain",
+    },
+    "currentDirectory": "https://joangmcd.github.io/kinase-gallery/overview_1/",
+    "title": "Kinase catalytic domain",
+    "defaultdisplay": "overview.wrl",
+    "labelColor": "white",
+    "labelText": ["DFG", "HRD"],
+    "labelCoords": {
+        "DFG": {
+            "x": -4.06,
+            "y": 7.00,
+            "z": 1.58
+        },
+        "HRD": {
+            "x": -4.45,
+            "y": 0.51,
+            "z": 0.31
+        }
+    }
+}
