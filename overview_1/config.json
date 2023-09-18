@@ -1,7 +1,7 @@
 {
     "filenames": ["overview.wrl"],
     "fileAliases": {
-        "overview.wrl": "Kinase domain",
+        "overview.wrl": "Kinase domain"
     },
     "currentDirectory": "https://joangmcd.github.io/kinase-gallery/overview_1/",
     "title": "Kinase catalytic domain",
