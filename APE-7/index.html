@@ -68,6 +68,7 @@
         <div>
             <button id="reverse">&#8592;</button>
             <button id="forward">&#8594;</button>
+            <button id="downloadButton">Download</button>
         </div>
         <div id="title"></div>
     </div>    
@@ -100,7 +101,10 @@
             const currentNumber = parseInt(currentDirectory.split("test")[1].split("/")[0]);
             window.location.href = currentDirectory.replace(`test${currentNumber}`, `test${currentNumber + 1}`);
         };
-        
+        document.getElementById('downloadButton').addEventListener('click', function() {
+        window.open('https://joangmcd.github.io/kinase-gallery/APE-7/v2.pse', '_blank');
+        });
+
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
         window.addEventListener('mousemove', onMouseMove, false);
