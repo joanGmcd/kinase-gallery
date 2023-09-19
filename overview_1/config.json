@@ -1,11 +1,13 @@
 {
-    "filenames": ["overview.wrl"],
+    "filenames": ["insr_active.wrl", "insr_inactive.wrl", "substrate.wrl"],
     "fileAliases": {
-        "overview.wrl": "Kinase domain"
+        "insr_active.wrl": "Active/DFGin",
+        "insr_inactive.wrl": "Inactive/DFGout",
+        "substrate.wrl": "Substrate"
     },
     "currentDirectory": "https://joangmcd.github.io/kinase-gallery/overview_1/",
-    "title": "Kinase catalytic domain",
-    "defaultdisplay": "overview.wrl",
+    "title": "Kinase catalytic domain (INSR)",
+    "defaultdisplay": "insr_active.wrl",
     "labelColor": "white",
     "labelText": ["DFG", "HRD"],
     "labelCoords": {
