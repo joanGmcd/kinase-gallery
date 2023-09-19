@@ -1,24 +1,31 @@
 {
-    "filenames": ["braf_active.wrl", "braf_body.wrl", "braf_aloop.wrl", "cdk6_aloop.wrl", "insr_aloop.wrl", "tk_substrate.wrl", "stk_substrate.wrl"],
+    "filenames": ["braf_body.wrl", "cdk_body.wrl", "insr_body.wrl", "braf_aloop.wrl", "cdk_aloop.wrl", "insr_aloop.wrl", "cdk_substrate.wrl", "insr_substrate.wrl", "pka_substrate.wrl"],
     "fileAliases": {
-        "braf_active.wrl": "Active|BRAF",
-        "braf_body.wrl": "body|BRAF",
+        "braf_body.wrl": "active|BRAF",
+        "cdk_body.wrl": "active|CDK",
+        "insr_body.wrl": "active|INSR",
         "braf_aloop.wrl": "DFGout|BRAF",
-        "cdk6_aloop.wrl": "DFGout|CDK6",
+        "cdk6_aloop.wrl": "DFGout|CDK",
         "insr_aloop.wrl": "DFGout|INSR",
-        "tk_substrate.wrl": "Sub.|TK",
-        "stk_substrate.wrl": "Sub.|STK"
+        "insr_substrate.wrl": "Sub.|INSR(tyr)",
+        "cdk_substrate.wrl": "Sub.|CDK(s/t)",
+        "pka_substrate.wrl": "Sub.|PKA(s/t)"
     },
-    "currentDirectory": "https://joangmcd.github.io/kinase-gallery/insr_4/",
-    "title": "DFGout | Pseudosubstrate",
-    "defaultdisplay": "braf_body.wrl",
-    "labelColor": "red",
-    "labelText": ["DFG"],
+    "currentDirectory": "https://joangmcd.github.io/kinase-gallery/substrate_5/",
+    "title": "Substrate binding & regulation/mimicry",
+    "defaultdisplay": "insr_body.wrl",
+    "labelColor": "white",
+    "labelText": ["DFG", "HRD"],
     "labelCoords": {
         "DFG": {
-            "x": -0.08,
-            "y": 2.85,
-            "z": -1.99
+            "x": 2.6,
+            "y": 2.73,
+            "z": 7.97
+        },
+        "HRD": {
+            "x": 0.8,
+            "y": -2.0,
+            "z": 10.50
         }
     }
 }
